@@ -38,6 +38,21 @@ const ProductScreen = () => {
           </li>
           <li>description: {product.description}</li>
         </ul>
+        <div>
+          <div className="card p-5">
+            <div className="mb-2 flex justify-between">
+              <div>Price</div>
+              <div>${product.price}</div>
+            </div>
+            <div className="mb-2 flex justify-between">
+              <div>Status</div>
+              <div>
+                {product.countInStock > 0 ? "in-stock" : "out-of-stock"}
+              </div>
+            </div>
+            <button className="primary-button w-full">Add To Cart</button>
+          </div>
+        </div>
       </div>
     </Layout>
   );
