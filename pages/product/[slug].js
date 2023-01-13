@@ -2,20 +2,30 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useContext } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Layout from "../../components/Layout";
+import { addToCart } from "../../redux/features/cart/cartSlice";
 import data from "../../utils/data";
 import { Store } from "../../utils/Store";
 
 const ProductScreen = () => {
   // const { state, dispatch } = useContext(Store);
+  const dispatch = useDispatch();
   const { query } = useRouter();
   const { slug } = query;
   const product = data.products.find((item) => item.slug === slug);
   if (!product) {
     return <Layout title="Produt Not Found">Produt Not Found</Layout>;
   }
+  const cartItems = useSelector((state) => state.cart.cart.cartItems);
+  const quantity = cartItems.find((item) => item.name === product.name);
 
   const handleAddToCart = () => {
+    if (product.countInStock <= quantity?.quantity) {
+      alert("Sorry product is out of stock");
+      return;
+    }
+    dispatch(addToCart(product));
     /*     const existItem = state.cart.cartItems.find(
       (item) => item.slug === product.slug
     );
@@ -42,6 +52,7 @@ const ProductScreen = () => {
           />
         </div>
         <ul>
+          <li>quantity:{quantity?.quantity}</li>
           <li className="text-lg">
             <h1>{product.name}</h1>
           </li>

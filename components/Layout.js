@@ -1,11 +1,14 @@
 import Head from "next/head";
 import Link from "next/link";
 import React, { useContext } from "react";
+import { useSelector } from "react-redux";
 import { Store } from "../utils/Store";
 
 const Layout = ({ title, children }) => {
   /*  const { state, dispatch } = useContext(Store);
   const { cart } = state; */
+  const cartItems = useSelector((state) => state.cart.cart.cartItems);
+  console.log(cartItems);
   return (
     <>
       <Head>
@@ -20,8 +23,13 @@ const Layout = ({ title, children }) => {
               najibMart
             </Link>
             <div className="flex gap-4">
-              <Link href="/">
+              <Link href="/cart">
                 Cart
+                {cartItems.length > 0 && (
+                  <span className="ml-1 rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white">
+                    {cartItems.length}
+                  </span>
+                )}
                 {/*  {cart.cartItems.length > 0 && (
                   <span className="ml-1 rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white">
                     {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
