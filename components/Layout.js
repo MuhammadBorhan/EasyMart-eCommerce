@@ -1,10 +1,14 @@
+import { useSession } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
 import React, { useContext } from "react";
 import { useSelector } from "react-redux";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { Store } from "../utils/Store";
 
 const Layout = ({ title, children }) => {
+  const { status, data: session } = useSession();
   /*  const { state, dispatch } = useContext(Store);
   const { cart } = state; */
   const cartItems = useSelector((state) => state.cart.cart.cartItems);
@@ -15,6 +19,7 @@ const Layout = ({ title, children }) => {
         <meta name="description" content="eCommerce Website" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <ToastContainer position="bottom-center" limit={1} />
       <div className="flex min-h-screen flex-col justify-between">
         <header>
           <nav className="flex justify-between items-center bg-white shadow-md h-14 px-4 ">
@@ -22,7 +27,7 @@ const Layout = ({ title, children }) => {
               najibMart
             </Link>
             <div className="flex gap-4">
-              <Link href="/cart">
+              <Link href="/cart" className="p-2">
                 Cart
                 {cartItems.length > 0 && (
                   <span className="ml-1 rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white">
@@ -35,7 +40,15 @@ const Layout = ({ title, children }) => {
                   </span>
                 )} */}
               </Link>
-              <Link href="/login">Login</Link>
+              {status === "loading" ? (
+                "loading"
+              ) : session?.user ? (
+                <span className="p-2">{session.user.name}</span>
+              ) : (
+                <Link href="/login" className="p-2">
+                  Login
+                </Link>
+              )}
             </div>
           </nav>
         </header>
