@@ -8,7 +8,6 @@ const Layout = ({ title, children }) => {
   /*  const { state, dispatch } = useContext(Store);
   const { cart } = state; */
   const cartItems = useSelector((state) => state.cart.cart.cartItems);
-  console.log(cartItems);
   return (
     <>
       <Head>

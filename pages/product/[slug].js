@@ -54,7 +54,6 @@ const ProductScreen = () => {
           />
         </div>
         <ul>
-          <li>quantity:{quantity?.quantity}</li>
           <li className="text-lg">
             <h1>{product.name}</h1>
           </li>

@@ -3,8 +3,13 @@ import Link from "next/link";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Layout from "../components/Layout";
-import { RxCrossCircled } from "react-icons/rx";
-import { removeFromCart } from "../redux/features/cart/cartSlice";
+import { RxCrossCircled, RxMinus, RxPlus } from "react-icons/rx";
+import {
+  addToCart,
+  decrement,
+  increment,
+  removeFromCart,
+} from "../redux/features/cart/cartSlice";
 import { useRouter } from "next/router";
 
 const CartPage = () => {
@@ -15,6 +20,16 @@ const CartPage = () => {
   const handleRemoveFromCart = (item) => {
     dispatch(removeFromCart(item));
   };
+
+  // const updateCartHandler = (item, qty) => {
+  //   const quantity = Number(qty);
+  //   // const { data } = await axios.get(`/api/products/${item._id}`);
+  //   // if (data.countInStock < quantity) {
+  //   //   return toast.error("Sorry. Product is out of stock");
+  //   // }
+  //   dispatch(addToCart({ ...item, quantity: quantity }));
+  //   // toast.success("Product updated in the cart");
+  // };
 
   return (
     <Layout title="Shopping Cart">
@@ -67,7 +82,22 @@ const CartPage = () => {
                         ))}
                       </select>
                     </td> */}
-                    <td className="p-5 text-right">${item.quantity}</td>
+                    <td className="p-5 text-right">
+                      {" "}
+                      <button
+                        aria-label="Decrement value"
+                        onClick={() => dispatch(decrement(item))}
+                      >
+                        -
+                      </button>
+                      ${item.quantity}
+                      <button
+                        aria-label="Increment value"
+                        onClick={() => dispatch(addToCart(item))}
+                      >
+                        +
+                      </button>
+                    </td>
                     <td className="p-5 text-right">${item.price}</td>
                     <td className="p-5 text-center">
                       <button onClick={() => handleRemoveFromCart(item)}>
