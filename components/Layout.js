@@ -11,7 +11,7 @@ const Layout = ({ title, children }) => {
   return (
     <>
       <Head>
-        <title>{title ? title + " - borhan" : "borhan"}</title>
+        <title>{title ? title + " - EasyMart" : "EasyMart"}</title>
         <meta name="description" content="eCommerce Website" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -35,7 +35,7 @@ const Layout = ({ title, children }) => {
                   </span>
                 )} */}
               </Link>
-              <Link href="/">Login</Link>
+              <Link href="/login">Login</Link>
             </div>
           </nav>
         </header>

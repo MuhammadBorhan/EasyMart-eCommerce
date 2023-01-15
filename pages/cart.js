@@ -1,20 +1,23 @@
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Layout from "../components/Layout";
 import { RxCrossCircled, RxMinus, RxPlus } from "react-icons/rx";
 import {
   addToCart,
   decrement,
-  increment,
   removeFromCart,
 } from "../redux/features/cart/cartSlice";
 import { useRouter } from "next/router";
 
 const CartPage = () => {
   const router = useRouter();
+
   const cartItems = useSelector((state) => state.cart.cart.cartItems);
+
+  // const items = JSON.parse(localStorage.getItem("cartItems"));
+  // console.log(items);
 
   const dispatch = useDispatch();
   const handleRemoveFromCart = (item) => {
@@ -129,7 +132,7 @@ const CartPage = () => {
               </li>
               <li>
                 <button
-                  onClick={() => router.push("/shipping")}
+                  onClick={() => router.push("login?redirect=/shipping")}
                   className="primary-button w-full"
                 >
                   Check Out
