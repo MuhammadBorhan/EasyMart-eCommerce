@@ -17,15 +17,9 @@ const ProductScreen = () => {
   if (!product) {
     return <Layout title="Produt Not Found">Produt Not Found</Layout>;
   }
-  const cartItems = useSelector((state) => state.cart.cart.cartItems);
-  const quantity = cartItems.find((item) => item.name === product.name);
 
   const router = useRouter();
   const handleAddToCart = () => {
-    if (product.countInStock <= quantity?.quantity) {
-      alert("Sorry product is out of stock");
-      return;
-    }
     dispatch(addToCart(product));
     router.push("/cart");
     /*     const existItem = state.cart.cartItems.find(

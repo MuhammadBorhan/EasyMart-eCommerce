@@ -21,6 +21,14 @@ const CartPage = () => {
     dispatch(removeFromCart(item));
   };
 
+  const increaseQuantity = (item) => {
+    if (item.countInStock <= item.quantity) {
+      alert("Sorry product is out of stock");
+      return;
+    }
+    dispatch(addToCart(item));
+  };
+
   // const updateCartHandler = (item, qty) => {
   //   const quantity = Number(qty);
   //   // const { data } = await axios.get(`/api/products/${item._id}`);
@@ -87,15 +95,17 @@ const CartPage = () => {
                       <button
                         aria-label="Decrement value"
                         onClick={() => dispatch(decrement(item))}
+                        className="border-2 px-4 py-1 rounded"
                       >
-                        -
+                        <RxMinus />
                       </button>
-                      ${item.quantity}
+                      <span className="mx-5"> ${item.quantity}</span>
                       <button
                         aria-label="Increment value"
-                        onClick={() => dispatch(addToCart(item))}
+                        onClick={() => increaseQuantity(item)}
+                        className="border-2 px-4 py-1 rounded"
                       >
-                        +
+                        <RxPlus />
                       </button>
                     </td>
                     <td className="p-5 text-right">${item.price}</td>

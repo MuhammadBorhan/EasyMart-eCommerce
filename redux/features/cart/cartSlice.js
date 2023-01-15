@@ -1,7 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
+// import Cookies from "js-cookie";
 
 const initialState = {
   cart: { cartItems: [] },
+  // cart: Cookies.get("cart")
+  //   ? JSON.parse(Cookies.get("cart"))
+  //   : { cartItems: [], shippingAddress: {}, paymentMethod: "" },
 };
 
 const cartSlice = createSlice({
