@@ -1,4 +1,5 @@
-import { useSession } from "next-auth/react";
+import { Menu } from "@headlessui/react";
+import { signOut, useSession } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
 import React, { useContext } from "react";
@@ -6,12 +7,19 @@ import { useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Store } from "../utils/Store";
+import DropdownLink from "./Dropdownlink";
+// import DropdownLink from "./DropdownLink";
 
 const Layout = ({ title, children }) => {
   const { status, data: session } = useSession();
   /*  const { state, dispatch } = useContext(Store);
   const { cart } = state; */
   const cartItems = useSelector((state) => state.cart.cart.cartItems);
+
+  const logoutClickHandler = () => {
+    // dispatch({ type: "CART_RESET" });
+    signOut({ callbackUrl: "/login" });
+  };
   return (
     <>
       <Head>
@@ -43,7 +51,45 @@ const Layout = ({ title, children }) => {
               {status === "loading" ? (
                 "loading"
               ) : session?.user ? (
-                <span className="p-2">{session.user.name}</span>
+                <Menu as="div" className="relative inline-block">
+                  <Menu.Button className="text-blue-600">
+                    {session.user.name}
+                  </Menu.Button>
+                  <Menu.Items className="absolute right-0 w-56 origin-top-right bg-white  shadow-lg ">
+                    <Menu.Item>
+                      <DropdownLink className="dropdown-link" href="/profile">
+                        Profile
+                      </DropdownLink>
+                    </Menu.Item>
+                    <Menu.Item>
+                      <DropdownLink
+                        className="dropdown-link"
+                        href="/order-history"
+                      >
+                        Order History
+                      </DropdownLink>
+                    </Menu.Item>
+                    {/* {session.user.isAdmin && (
+                      <Menu.Item>
+                        <DropdownLink
+                          className="dropdown-link"
+                          href="/admin/dashboard"
+                        >
+                          Admin Dashboard
+                        </DropdownLink>
+                      </Menu.Item>
+                    )} */}
+                    <Menu.Item>
+                      <a
+                        className="dropdown-link"
+                        href="#"
+                        onClick={logoutClickHandler}
+                      >
+                        Logout
+                      </a>
+                    </Menu.Item>
+                  </Menu.Items>
+                </Menu>
               ) : (
                 <Link href="/login" className="p-2">
                   Login
