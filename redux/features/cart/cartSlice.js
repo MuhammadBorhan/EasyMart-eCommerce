@@ -1,7 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  cart: { cartItems: [], shippingAddress: {}, paymentMethod: "" },
+  cart: {
+    cartItems: [],
+    shippingAddress: { name: "borhan" },
+    paymentMethod: "",
+  },
 };
 
 const cartSlice = createSlice({
@@ -43,9 +47,22 @@ const cartSlice = createSlice({
         }
       }
     },
+    SAVE_SHIPPING_ADDRESS: (state, action) => {
+      return {
+        ...state,
+        cart: {
+          ...state.cart,
+          shippingAddress: {
+            ...state.cart.shippingAddress,
+            ...action.payload,
+          },
+        },
+      };
+    },
   },
 });
 
-export const { addToCart, removeFromCart, decrement } = cartSlice.actions;
+export const { addToCart, removeFromCart, decrement, SAVE_SHIPPING_ADDRESS } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;
